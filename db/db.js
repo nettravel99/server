@@ -18,4 +18,7 @@ dbmethods.getDB = function (){
 
 }
 
+
+dbmethods.getDB();
+
 module.exports = dbmethods;

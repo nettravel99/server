@@ -1,7 +1,7 @@
 var dbmethods = require('../db/db');
 
 
- db = dbmethods.getDB();
+ //db = dbmethods.getDB();
 
 function getAllPlaceOfServices(req, res, next) {
   console.log("This is db ****", db.any)

@@ -10,6 +10,22 @@ var cors = require('cors');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var auth = require('./routes/auth');
+var pswdFuncs = require('./factories/utils/passwordEncrypt')
+
+// Testing the password functions
+// var salt=pswdFuncs.genRandomString(20);
+// var passwordData = pswdFuncs.sha512("TestPassword",salt) 
+var passwordData = pswdFuncs.getPassword("MYPASSWORD", 'this is salt 14')
+
+
+console.log('Passwordhash = '+passwordData.passwordHash);
+console.log('nSalt = '+passwordData.salt);
+
+passwordData = pswdFuncs.createPassword("MYPASSWORD", 23)
+console.log('Length = '+passwordData.length);
+console.log('Passwordhash = '+passwordData.passwordHash);
+console.log('nSalt = '+passwordData.salt);
+// End Testing
 
 var app = express();
 // Using Helmet for security settings of the header

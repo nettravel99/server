@@ -13,7 +13,7 @@ dbmethods.getDB = function (){
   var pgp = require('pg-promise')(options);
   var connectionString = 'postgres://localhost:5433/crm';
   var db = pgp(connectionString);
-  return db;
+  return this;
 
 
 }

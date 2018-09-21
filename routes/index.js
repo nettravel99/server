@@ -15,6 +15,7 @@ router.get('/api/placeOfService', dbPOS.getAllPlaceOfServices);
 router.get('/api/puppliesAll', db.getAllPuppies);
 router.get('/api/dictionary', db.getAllDictionary);
 router.get('/dictionary', db.getAllDictionary);
+//router.get('/*', db.catchAll);
 /* GET home page. */
 
 // router.get('/placeOfService', function(req,res){
