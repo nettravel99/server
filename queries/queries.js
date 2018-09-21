@@ -1,7 +1,7 @@
 var dbmethods = require("../db/db");
 // var path = require('path');
 
-//db = dbmethods.getDB();
+db = dbmethods.getDB();
 
 console.log("Look here", dbmethods);
 
