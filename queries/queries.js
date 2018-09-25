@@ -35,7 +35,8 @@ function getAllDictionary(req, res, next) {
 }
 
 function getAllPuppies(req, res, next) {
-  db.any("select * from dictionary")
+  console.log("All Puppy");
+  db.any("select * from pups")
     .then(function(data) {
       res.status(200).json({
         status: "success",
@@ -49,6 +50,7 @@ function getAllPuppies(req, res, next) {
 }
 
 function getSinglePuppy(req, res, next) {
+  console.log("Single Puppy");
   var pupID = parseInt(req.params.id);
   db.one("select * from pups where id = $1", pupID)
     .then(function(data) {

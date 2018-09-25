@@ -26,10 +26,7 @@ function sha512(password, salt) {
   var hash = crypto.createHmac("sha512", salt); /** Hashing algorithm sha512 */
   hash.update(password);
   var value = hash.digest("hex");
-  return {
-    salt: salt,
-    passwordHash: value
-  };
+  return { salt: salt, passwordHash: value };
 }
 
 // This is for the purpose of testing only
@@ -43,10 +40,7 @@ function saltHashPassword(userpassword) {
 
 pswdFuncs.getPassword = (userpassword, salt) => {
   var passwordData = sha512(userpassword, salt);
-  return {
-    salt: passwordData.salt,
-    passwordHash: passwordData.passwordHash
-  };
+  return { salt: passwordData.salt, passwordHash: passwordData.passwordHash };
 };
 
 pswdFuncs.createPassword = (userpassword, length) => {
@@ -57,6 +51,21 @@ pswdFuncs.createPassword = (userpassword, length) => {
     salt: passwordData.salt,
     passwordHash: passwordData.passwordHash
   };
+};
+
+pswdFuncs.validate = (salt, password, reqPswd) => {
+  console.log("Salt in validate: ", salt);
+  console.log("Password Entered: ", reqPswd);
+  var passwordData = sha512(reqPswd, salt);
+  console.log("Password in validate: ", passwordData.passwordHash);
+  console.log("Password from database:", password);
+  if (passwordData.passwordHash === password) {
+    console.log("This was a match");
+    return true;
+  } else {
+    console.log("No Match");
+    return false;
+  }
 };
 
 module.exports = pswdFuncs;
