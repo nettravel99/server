@@ -1,0 +1,30 @@
+// ???? Todo  ???? need to set headers for security.
+  // TODO? - email should be transformed to lower case and kept in lower case.
+  3. Email should be an index
+  4. POSTGRESQL is there an automatic way to have the timestamp for changes tracked and maybe even every change.
+  5. When you look  up the user in the db we can check for null otherwise check for validity of password and return jsonwebtoken
+        CHECK USERQUERIES for below line
+        This can be checked on the same line with if  (User && isValidPassword()) ....
+        if null then res.status(400).json{error, {global......}}
+  6. bcrypt can be used instead of crypto
+  7. Does crypto have a password compare method?
+
+
+///////////////////////////////
+pswdFuncs.validate = (salt, password, reqPswd, email) => {
+  console.log("Salt in validate: ", salt);
+  console.log("Password Entered: ", reqPswd);
+  var passwordData = sha512(reqPswd, salt);
+  console.log("Password in validate: ", passwordData.passwordHash);
+  console.log("Password from database:", password);
+  if (passwordData.passwordHash === password) {
+    console.log("This was a match");
+    return { email: email, jwt: generateJWT(email) };
+  } else {
+    console.log("No Match");
+    return null;
+  }
+};
+
+
+////////////////////////
