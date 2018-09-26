@@ -1,5 +1,6 @@
 "use strict";
 var crypto = require("crypto");
+var jwt = require("jsonwebtoken");
 
 /**
  * generates random string of characters i.e salt
@@ -38,6 +39,10 @@ function saltHashPassword(userpassword) {
   console.log("nSalt = " + passwordData.salt);
 }
 
+function generateJWT(useremail) {
+  return jwt.sign({ email: useremail }, "secretkey");
+}
+
 pswdFuncs.getPassword = (userpassword, salt) => {
   var passwordData = sha512(userpassword, salt);
   return { salt: passwordData.salt, passwordHash: passwordData.passwordHash };
@@ -53,18 +58,23 @@ pswdFuncs.createPassword = (userpassword, length) => {
   };
 };
 
-pswdFuncs.validate = (salt, password, reqPswd) => {
+pswdFuncs.validate = (salt, password, reqPswd, email) => {
   console.log("Salt in validate: ", salt);
   console.log("Password Entered: ", reqPswd);
+  try {
+    console.log("JWT: ", generateJWT(email));
+  } catch {
+    console.log("JWT call failed");
+  }
   var passwordData = sha512(reqPswd, salt);
   console.log("Password in validate: ", passwordData.passwordHash);
   console.log("Password from database:", password);
   if (passwordData.passwordHash === password) {
     console.log("This was a match");
-    return true;
+    return { email: email, jwt: generateJWT(email) };
   } else {
     console.log("No Match");
-    return false;
+    return null;
   }
 };
 
