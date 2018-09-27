@@ -71,7 +71,7 @@ pswdFuncs.validate = (salt, password, reqPswd, email) => {
   console.log("Password from database:", password);
   if (passwordData.passwordHash === password) {
     console.log("This was a match");
-    return { email: email, jwt: generateJWT(email) };
+    return { email: email, token: generateJWT(email) };
   } else {
     console.log("No Match");
     return null;
