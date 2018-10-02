@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var userQueries = require("../queries/USERQUERIES");
+var signupQueries = require("../queries/signupQueries");
 
-router.post("/signup", userQueries.signupUser);
+router.post("/signup", signupQueries.signupUser);
 
 /* GET users listing. */
 router.get("/", function(req, res, next) {

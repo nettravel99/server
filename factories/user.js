@@ -6,7 +6,7 @@ const createUser = ({ userName, avatar, password })  => ({
     userName,
     avatar,
     password,
-    
+
     setUserName(userName) {
         this.userName = userName;
         return this; // this is returned which is same as user - returning the same object instance for method chaining.
@@ -21,6 +21,6 @@ const createUser = ({ userName, avatar, password })  => ({
 const getUser = ({userName, password}) => {
     userName,
     password,
-   
+
 
 }
