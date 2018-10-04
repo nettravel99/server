@@ -11,7 +11,8 @@ const createUser = ({ userName, avatar, password })  => ({
         this.userName = userName;
         return this; // this is returned which is same as user - returning the same object instance for method chaining.
     },
-    veirfyUser = () => {
+
+    verifyUser = () => {
         // check if user is valid?
     },
 

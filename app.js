@@ -10,6 +10,7 @@ var bodyparser = require("body-parser");
 var index = require("./routes/index");
 var users = require("./routes/users");
 var auth = require("./routes/auth");
+var signup = require("./routes/signup");
 
 var pswdFuncs = require("./factories/utils/passwordEncrypt");
 
@@ -56,8 +57,9 @@ app.use(function(req, res, next) {
 
 app.use("/", index);
 app.use("/users", users);
-app.use("/api/auth", auth);
 
+app.use("/api/auth", auth);
+app.use("/api/signup", signup);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error("Not Found");

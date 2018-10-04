@@ -23,5 +23,19 @@ router.get("/", function(req, res, next) {
 router.get("/dev", function(req, res) {
   res.send("Hello, you are now on the Dev route!");
 });
-
+/* GET users listing. */
+router.get("/signup", function(req, res, next) {
+  // Comment out this line: res.send('respond with a resource'); And insert
+  // something like this instead:
+  res.json([
+    {
+      id: 1,
+      username: "signupUser"
+    },
+    {
+      id: 2,
+      username: "D0loresH4ze"
+    }
+  ]);
+});
 module.exports = router;

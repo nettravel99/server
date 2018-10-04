@@ -60,8 +60,8 @@ pswdFuncs.createPassword = (userpassword, length) => {
 
 pswdFuncs.getSaltandHash = userpassword => {
   var salt = genRandomString(20); /** Gives us salt of length 16 */
-  var passwordData = sha512(userpassword, salt);
-  return { user: { hash: passwordData, salt: salt } };
+  var hashSalt = sha512(userpassword, salt);
+  return { hashSalt: hashSalt };
 };
 
 pswdFuncs.validate = (salt, password, reqPswd, email) => {

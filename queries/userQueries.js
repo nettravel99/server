@@ -43,7 +43,11 @@ function verifyUser(req, res, next) {
     })
     .catch(function(err) {
       console.log("Error in SQL call");
-      return next(err);
+      res.status(400).json({
+        errors: {
+          global: "SQL error " + String(err)
+        }
+      });
 
       // res .status(400) .json({status: "fail", data: err, message: "Error retrieving
       // data"});
