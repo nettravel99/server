@@ -17,6 +17,7 @@ function verifyUser(req, res, next) {
   db.one("select * from users where email=$1", email)
     .then(function(data) {
       console.log("Password is: ", pswdMethods.getPassword(reqPswd, data.salt));
+      console.log("Data in login:", data);
       // data.salt and data.password are the values in the datatbase. reqPswd is from the user logging in.
       result = pswdMethods.validate(
         data.salt,
@@ -36,16 +37,15 @@ function verifyUser(req, res, next) {
       } else {
         res.status(400).json({
           errors: {
-            global: "Invalid Credentials - 3"
+            global: "Invalid Credentials - during login"
           }
         });
       }
     })
     .catch(function(err) {
-      console.log("Error in SQL call");
       res.status(400).json({
         errors: {
-          global: "SQL error " + String(err)
+          global: "SQL error " + String(err.message)
         }
       });
 

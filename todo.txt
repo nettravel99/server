@@ -12,6 +12,11 @@
   9. Check errors when server is not available
   10. database email address must be unique.
   11. Storage is not being setting during login
+  12. Database add ORM ? Sequelize
+  13. Look into graystone mumps
+  14. Locking before updating
+  15. Transactions - start end commit.
+  16. Add timestamp to each record added and modified. etc. 
 
 
 ///////////////////////////////

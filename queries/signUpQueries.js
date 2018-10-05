@@ -77,8 +77,15 @@ async function signupUser(req, res, next) {
       });
     })
     .catch(function(err) {
-      console.log("Insert Error");
-      return next(err);
+      console.log("Error in SQL call");
+      res.status(400).json({
+        errors: {
+          global: "SQL error " + String(err)
+        }
+      });
+
+      // res .status(400) .json({status: "fail", data: err, message: "Error retrieving
+      // data"});
     });
 }
 

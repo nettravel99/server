@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --exec node --inspect-brk ./bin/www"
-    /* "start": "nodemon --exec node ./bin/www" */
+    "start": "nodemon --exec node ./bin/www",
+    "startdebug": "nodemon --exec node --inspect-brk ./bin/www"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
