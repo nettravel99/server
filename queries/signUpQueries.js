@@ -24,7 +24,12 @@ async function signupUser(req, res, next) {
   try {
     edata = await db.any("select * from users where email=$1 ", email);
   } catch (err) {
-    console.log(new Error(err.message));
+    res.status(403).json({
+      errors: {
+        global: err.message
+      }
+    });
+    return;
   }
 
   if (edata.length) {
@@ -80,7 +85,7 @@ async function signupUser(req, res, next) {
       console.log("Error in SQL call");
       res.status(400).json({
         errors: {
-          global: "SQL error " + String(err)
+          global: "SQL error " + String(err.message)
         }
       });
 
