@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon --exec node ./bin/www",
-    "startX": "nodemon --exec node --inspect-brk ./bin/www"
+    "startX": "nodemon --exec node ./bin/www",
+    "start": "nodemon --exec node --inspect-brk ./bin/www"
   },
   "dependencies": {
     "babel-cli": "^6.26.0",
@@ -20,6 +20,7 @@
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.3.0",
     "morgan": "~1.9.0",
+    "nodemailer": "^4.6.8",
     "nodemon": "^1.18.4",
     "openssl": "^1.1.0",
     "pg-promise": "^5.9.7",

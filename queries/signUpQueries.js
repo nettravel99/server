@@ -1,6 +1,7 @@
 var dbmethods = require("../db/db");
 var pswdMethods = require("../factories/utils/passwordEncrypt");
 var jwt = require("jsonwebtoken");
+var sendConfirmationEmail = require("../mailer");
 // var path = require('path');
 
 // const test = async () => {
@@ -58,28 +59,37 @@ async function signupUser(req, res, next) {
   result = pswdMethods.getSaltandHash(reqPswd);
   // Now we need to add the user and get the result back if succesful
   // Then call JWT to send the result back
+  let usercode = "MaryC";
   userSignup = {
-    usercode: "MaryC",
+    usercode: usercode,
     last_name: "Cahill",
     first_name: "Mary",
     password: result.hashSalt.passwordHash,
     salt: result.hashSalt.salt,
-    email: email
+    email: email,
+    confirmationToken: jwt.sign(
+      { confirmationToken: usercode },
+      "secretkeyForConfirmation"
+    )
   };
   //
   console.log("before Inserted");
   let token = jwt.sign({ email: email }, "secretkey");
   db.none(
-    "insert into users(usercode, last_name, first_name, password,salt,email)" +
-      "values(${usercode}, ${last_name}, ${first_name}, ${password}, ${salt}, ${email})",
+    "insert into users(usercode, last_name, first_name, password,salt,email,confirmationToken)" +
+      "values(${usercode}, ${last_name}, ${first_name}, ${password}, ${salt}, ${email}, ${confirmationToken})",
     userSignup
   )
     .then(function() {
-      res.status(200).json({
-        status: "success",
-        data: { email: email, token: jwt.sign({ email: email }, "secretkey") },
-        message: "Sign Up was successful"
-      });
+      sendConfirmationEmail(userSignup),
+        res.status(200).json({
+          status: "success",
+          data: {
+            email: email,
+            token: jwt.sign({ email: email }, "secretkey")
+          },
+          message: "Sign Up was successful"
+        });
     })
     .catch(function(err) {
       console.log("Error in SQL call");

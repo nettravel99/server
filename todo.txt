@@ -16,7 +16,8 @@
   13. Look into graystone mumps
   14. Locking before updating
   15. Transactions - start end commit.
-  16. Add timestamp to each record added and modified. etc. 
+  16. Add timestamp to each record added and modified. etc.
+  17. Mail user NodeMail and for SMTP uses MailTrap which can be used for testing. Need real email setup for production. 
 
 
 ///////////////////////////////
