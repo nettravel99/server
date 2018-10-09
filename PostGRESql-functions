@@ -1,0 +1,38 @@
+create or replace function user_token_exists(p_confirmationtoken text)
+returns integer as $total$
+declare
+total integer;
+begin
+select count(*) into total from users where p_confirmationtoken=confirmationtoken;
+If total then
+	UPDATE users
+	SET confirmationtoken = null,
+	confirmed=true
+	Where p_confirmationtoken=confirmationtoken;
+ return 1;
+ else
+ return 0;
+end if;
+end;
+$total$ language plpgsql;
+
+
+
+create or replace function user_token_exists2(p_confirmationtoken text)
+returns RECORD as $$
+declare
+r record;
+begin
+select * from users where p_confirmationtoken=confirmationtoken into r;
+
+If r.id>0 then
+	UPDATE users
+	SET confirmationtoken = null,
+	confirmed=true
+	Where p_confirmationtoken=confirmationtoken;
+
+end if;
+return r;
+end;
+$$
+language plpgsq

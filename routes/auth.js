@@ -6,6 +6,10 @@ var db1 = require("../queries/queries");
 
 router.post("/", db.verifyUser);
 
+router.post("/confirm/:id", db.confirm);
+router.post("/confirm", db.confirm);
+router.get("/:id", db.verifyUser);
+
 router.post("/", function(req, res, next) {
   // Comment out this line: res.send('respond with a resource'); And insert
   // something like this instead:
@@ -16,8 +20,6 @@ router.post("/", function(req, res, next) {
     }
   });
 });
-
-router.get("/:id", db.verifyUser);
 
 /* POST for auth listing. */
 router.get("/", function(req, res, next) {
