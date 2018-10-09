@@ -25,7 +25,7 @@ function verifyUser(req, res, next) {
         reqPswd,
         data.email
       );
-      console.log("result", result);
+      console.log("result:", result);
       //var result = true;
       if (result) {
         res.status(200).json({
@@ -54,8 +54,71 @@ function verifyUser(req, res, next) {
     });
 }
 
+async function confirm(req, res, next) {
+  const { token } = req.body; // this works because of body-parser middleware.
+
+  //console.log("email", email);
+  //console.log("password", reqPswd);
+  // TODO? - email should be transformed to lower case and kept in lower case.
+  //  db.one("select * from users where email = $1", email)
+  let edata;
+  try {
+    edata = await db.any(
+      "select * from users where confirmationToken=$1 ",
+      token
+    );
+  } catch (err) {
+    res.status(403).json({
+      errors: {
+        global: err.message
+      }
+    });
+    return;
+  }
+
+  if (!edata.length) {
+    res.status(403).json({
+      errors: {
+        global: "This email is in use"
+      }
+    });
+    return;
+  }
+
+  console.log("before Inserted");
+  let token = jwt.sign({ email: email }, "secretkey");
+  db.none(
+    "insert into users(usercode, last_name, first_name, password,salt,email,confirmationToken)" +
+      "values(${usercode}, ${last_name}, ${first_name}, ${password}, ${salt}, ${email}, ${confirmationToken})",
+    userSignup
+  )
+    .then(function() {
+      sendConfirmationEmail(userSignup),
+        res.status(200).json({
+          status: "success",
+          data: {
+            email: email,
+            token: jwt.sign({ email: email }, "secretkey")
+          },
+          message: "Sign Up was successful"
+        });
+    })
+    .catch(function(err) {
+      console.log("Error in SQL call");
+      res.status(400).json({
+        errors: {
+          global: "SQL error " + String(err.message)
+        }
+      });
+
+      // res .status(400) .json({status: "fail", data: err, message: "Error retrieving
+      // data"});
+    });
+}
+
 module.exports = {
-  verifyUser: verifyUser
+  verifyUser: verifyUser,
+  confirm: confirm
 };
 
 // var dbmethods = require("../db/db");
