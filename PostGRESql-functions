@@ -19,20 +19,18 @@ $total$ language plpgsql;
 
 
 create or replace function user_token_exists2(p_confirmationtoken text)
-returns RECORD as $$
+returns json as $$
 declare
-r record;
+r json;
 begin
-select * from users where p_confirmationtoken=confirmationtoken into r;
-
-If r.id>0 then
+If EXISTS (select row_to_json(users) from users where p_confirmationtoken=confirmationtoken ) Then
+	select row_to_json(users) from users where p_confirmationtoken=confirmationtoken into r;
 	UPDATE users
 	SET confirmationtoken = null,
 	confirmed=true
 	Where p_confirmationtoken=confirmationtoken;
-
 end if;
 return r;
 end;
 $$
-language plpgsq
+language plpgsql;
